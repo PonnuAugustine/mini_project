@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Automated ID Card Generation System</title>
+    <link rel="stylesheet" href="{% static 'css/adminhome.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">ID Card Generation System - Student</div>
+        <nav>
+            <ul>
+                <li>{{ request.user.first_name }} {{ request.user.last_name }}</li>
+                <li><a href="{% url 'index' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="side-nav">
+            <ul>
+                <li><a href="{% url 'studenthome' %}">Overview</a></li>
+                <li><a href="{% url 'studentform' %}">Fill ID Card Details</a></li>
+                <li><a href="{% url 'view_corrections' %}">Updates</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            {% block content %}
+            <!-- Student-specific content will go here -->
+            {% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Automated ID Card Generation System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,177 @@
+{% extends 'facultybase.html' %}
+
+{% block title %}Faculty Dashboard - Student Data{% endblock %}
+
+{% block content %}
+    <h2>Student Details for Verification</h2>
+
+    <label for="batchFilter">Filter by Batch:</label>
+    <select id="batchFilter">
+        <option value="">All</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+    </select>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Admission Number</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Batch</th>
+                    <th>Address</th>
+                    <th>Contact Details</th>
+                    <th>Photo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.admission_no }}</td>
+                    <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                    <td>{{ student.department.name }}</td>
+                    <td>{{ student.batch.start_year }} - {{ student.batch.end_year }}</td>
+                    <td>
+                        {{ student.house }}, {{ student.street }}<br>
+                        {{ student.city }}, {{ student.district }}<br>
+                        {{ student.state }} - {{ student.pincode }}
+                    </td>
+                    <td>
+                        Phone: {{ student.phone }}<br>
+                        Guardian: {{ student.guardian_phone }}
+                    </td>
+                    <td>
+                        {% if student.photo %}
+                            <img src="{{ student.photo.url }}" alt="Student Photo" class="student-photo">
+                        {% else %}
+                            No photo available
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.approval_status == 'Pending' %}
+                        <form method="post" action="{% url 'verify_student' student.admission_no %}">
+                            {% csrf_token %}
+                            <button type="submit" class="action-btn verify-btn">Verify</button>
+                        </form>
+                        {% endif %}
+                        <button class="mark-correction-btn" data-student="{{ student.admission_no }}">Mark for Correction</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="11">No students found in your department.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="correctionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Mark for Correction</h3>
+            <form method="post" action="{% url 'submit_correction' %}">
+                {% csrf_token %}
+                <input type="hidden" id="studentId" name="student_id">
+                <label for="correctionDetails">Correction Details:</label>
+                <textarea id="correctionDetails" name="correction_details" required></textarea>
+                <button type="submit">Send Correction</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.mark-correction-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const studentId = this.getAttribute('data-student');
+                document.getElementById('studentId').value = studentId;
+                document.getElementById('correctionModal').style.display = 'block';
+            });
+        });
+        
+        document.querySelector('.close-btn').addEventListener('click', function () {
+            document.getElementById('correctionModal').style.display = 'none';
+        });
+    </script>
+    <style>
+        /* Filter select */
+        label {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        #batchFilter {
+            padding: 5px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        /* Table Container */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f9f9f9;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Photo Styling */
+        .student-photo {
+            width: 60px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 8px 12px;
+            font-size: 14px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .verify-btn {
+            background-color: #4CAF50;
+        }
+
+        .correction-btn {
+            background-color: #FF5733;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+        /* Basic modal styling */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; padding: 20px; border-radius: 5px; width: 300px; }
+        .close-btn { float: right; cursor: pointer; font-size: 20px; }
+    </style>
+{% endblock %}

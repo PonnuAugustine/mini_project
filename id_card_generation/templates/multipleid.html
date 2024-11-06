@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card</title>
+</head>
+<body>
+    <section id="multiple-id-cards">
+        <div class="print-button-container">
+            <!-- Single Print Button for all ID cards -->
+            <button onclick="window.print()" class="print-button">Print</button>
+        </div>
+        <div class="id-cards-container">
+            {% for student in verified_students %}
+                <div class="id-card">
+                    <div class="id-card-header">
+                        <h2>College ID Card</h2>
+                    </div>
+                    <div class="id-card-body">
+                        <div class="id-card-left">
+                            {% if student.photo %}
+                                <img src="{{ student.photo.url }}" alt="Student Photo" class="student-photo">
+                            {% else %}
+                                <div class="placeholder-photo">No Photo</div>
+                            {% endif %}
+                        </div>
+                        <div class="id-card-right">
+                            <p><strong>Admission Number:</strong> {{ student.admission_no }}</p>
+                            <p><strong>Name:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+                            <p><strong>Department:</strong> {{ student.department.name }}</p>
+                            <p><strong>Batch:</strong> {{ student.batch.start_year }} - {{ student.batch.end_year }}</p>
+                            <p><strong>Phone:</strong> {{ student.phone }}</p>
+                            <p><strong>Guardian Phone:</strong> {{ student.guardian_phone }}</p>
+                            <p><strong>Blood Group:</strong> {{ student.blood_group }}</p>
+                            <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                        </div>
+                    </div>
+                    <div class="id-card-footer">
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <script>
+        // Optional: Customize print settings here, if needed
+        window.onafterprint = function() {
+            // Add any cleanup tasks if required after printing
+        }
+    </script>
+
+    <style>
+        /* Styles for displaying multiple ID cards */
+        .id-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .id-card {
+            width: 300px;
+            border: 2px solid #2a9df4;
+            border-radius: 8px;
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .id-card-header {
+            text-align: center;
+            background-color: #2a9df4;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .id-card-body {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .id-card-left {
+            flex: 1;
+            padding-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .student-photo, .placeholder-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            object-fit: cover;
+        }
+
+        .id-card-right {
+            flex: 2;
+            padding-left: 10px;
+        }
+
+        .id-card-right p {
+            font-size: 14px;
+        }
+
+        .id-card-footer {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .print-button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .print-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</html>

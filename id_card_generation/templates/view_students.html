@@ -1,0 +1,150 @@
+{% extends 'adminbase.html' %}
+
+{% block content %}
+<section id="view-students">
+    <h2>View Verified Student Details</h2>
+
+    <!-- Generate All Button -->
+    <form action="{% url 'generate_multiple_idcards' %}" method="get">
+        <button type="submit" class="generate-all-button">Generate All</button>
+    </form>
+
+    {% if verified_students %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Admission Number</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Batch</th>
+                    <th>Contact Details</th>
+                    <th>Photo</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in verified_students %}
+                <tr>
+                    <td>{{ student.admission_no }}</td>
+                    <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                    <td>{{ student.department.name }}</td>
+                    <td>{{ student.batch.start_year }} - {{ student.batch.end_year }}</td>
+                    <td>
+                        Phone: {{ student.phone }}<br>
+                        Guardian: {{ student.guardian_phone }}
+                    </td>
+                    <td>
+                        {% if student.photo %}
+                            <img src="{{ student.photo.url }}" alt="Student Photo" class="student-photo">
+                        {% else %}
+                            No photo available
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- Generate ID Card button -->
+                        {% if student.admission_no %}
+                            <form action="{% url 'idcard' student.admission_no %}" method="get">
+                                <button type="submit" class="generate-button">Generate ID Card</button>
+                            </form>
+                        {% else %}
+                            <p>ID not available</p>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No verified students available.</p>
+    {% endif %}
+</section>
+<style>
+        /* Table Container */
+    .table-container {
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #f9f9f9;
+    }
+
+    table th, table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #ff4800;
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover {
+        background-color: #e0e0e0;
+    }
+
+    /* Photo Styling */
+    .student-photo {
+        width: 50px;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    /* Section Styling */
+    #view-students {
+        margin: 20px;
+        padding: 20px;
+        background: #e9f7fd;
+        border-radius: 8px;
+    }
+
+    #view-students h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* No Data Message */
+    #view-students p {
+        color: #777;
+        font-size: 16px;
+    }
+
+    /* Generate Button Styling */
+    .generate-button {
+        padding: 8px 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .generate-button:hover {
+        background-color: #45a049;
+    }
+    .generate-all-button {
+        padding: 8px 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .generate-all-button:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock %}

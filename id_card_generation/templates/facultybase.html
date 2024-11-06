@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - Automated ID Card Generation System</title>
+    <link rel="stylesheet" href="{% static 'css/facultyhome.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">ID Card Generation System - Faculty</div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="side-nav">
+            <ul>
+                <li><a href="{% url 'facultyhome' %}">Overview</a></li>
+                <li><a href="{% url 'studentdata' %}">Student Data</a></li>
+                <li><a href="{% url 'pendingupdates' %}">Pending Updates</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            {% block content %}
+            <!-- Faculty-specific content will go here -->
+            {% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Automated ID Card Generation System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

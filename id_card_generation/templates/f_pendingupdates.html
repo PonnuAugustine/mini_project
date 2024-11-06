@@ -1,0 +1,84 @@
+{% extends 'facultybase.html' %}
+
+{% block title %}Faculty Dashboard - Pending Updates{% endblock %}
+
+{% block content %}
+    <h2>Pending Student Updates</h2>
+    <!-- You can add specific content or table data related to pending student updates here -->
+    <p>These are the students who need to make updates or corrections:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Admission Number</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Correction Requested</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>123456</td>
+                <td>John Doe</td>
+                <td>Computer Science</td>
+                <td>Address correction</td>
+            </tr>
+            <tr>
+                <td>789012</td>
+                <td>Jane Smith</td>
+                <td>Electrical Engineering</td>
+                <td>Phone number correction</td>
+            </tr>
+        </tbody>
+    </table>
+    <style>
+        /* Page heading */
+        h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Paragraph description */
+        p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* Table styles */
+        .pending-updates-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .pending-updates-table thead {
+            background-color: #f7f8fa;
+        }
+
+        .pending-updates-table th, .pending-updates-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            color: #555;
+        }
+
+        .pending-updates-table th {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .pending-updates-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Row styling for visual clarity */
+        .pending-updates-table tbody tr:nth-child(even) {
+            background-color: #f4f4f9;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'facultybase.html' %}
+
+{% block title %}Faculty Dashboard - Overview{% endblock %}
+
+{% block content %}
+    <h1>Welcome, {{ user.first_name }}</h1>
+
+    <!-- Faculty Information Section -->
+    <div class="faculty-info">
+        <div class="card">
+            <h3>Department</h3>
+            <p>{{ faculty.department.name }}</p>
+        </div>
+        <div class="card">
+            <h3>Verification Status</h3>
+            <p>{{ faculty.is_verified|yesno:"Verified,Pending" }}</p>
+        </div>
+        <div class="card">
+            <h3>Students Pending Verification</h3>
+            <p>{{ pending_students_count }}</p>
+        </div>
+    </div>
+
+    <style>
+        /* Faculty Info Section Styles */
+        .faculty-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4800;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'studentbase.html' %}
+
+{% block title %}Student Dashboard - Overview{% endblock %}
+
+{% block content %}
+    <div class="welcome-message">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+        <p>Your student ID card generation platform.</p>
+    </div>
+
+    <div class="overview">
+        <div class="card">
+            <h3>Admission Number</h3>
+            <p>{{ user.student.admission_no }}</p> <!-- Assuming username is admission number -->
+        </div>
+        <div class="card">
+            <h3>Department</h3>
+            <p>{{ user.student.department.name }}</p> <!-- Assuming user profile has a department -->
+        </div>
+        <div class="card">
+            <h3>Status</h3>
+            <p>{{ user.student.approval_status }}</p> <!-- Assuming user profile has approval status -->
+        </div>
+    </div>
+
+    <style>
+        /* Student Overview Styles */
+        .welcome-message {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .overview {
+            display: flex;
+            justify-content: space-around; /* Distributes space between cards */
+            margin-top: 20px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1; /* Makes the cards flexible in size */
+            margin: 0 10px; /* Adds margin between cards */
+        }
+
+        .card h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4800; /* Highlighted color for counts */
+        }
+    </style>
+{% endblock %}

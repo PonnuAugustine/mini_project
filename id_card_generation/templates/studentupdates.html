@@ -1,0 +1,78 @@
+{% extends 'studentbase.html' %}
+
+{% block title %}Correction Details{% endblock %}
+
+{% block content %}
+    <div class="correction-details-container">
+        <h1>Correction Details</h1>
+        
+        {% if corrections %}
+            <table class="correction-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Detail</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for correction in corrections %}
+                        <tr>
+                            <td>{{ correction.created_at }}</td>
+                            <td>{{ correction.details }}</td>
+                            <td>{{ correction.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-updates">
+                <p>No correction updates available.</p>
+            </div>
+        {% endif %}
+    </div>
+    <style>
+        .correction-details-container {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .correction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .correction-table th,
+        .correction-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        .correction-table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .correction-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-updates {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+        }
+    </style>
+{% endblock %}
